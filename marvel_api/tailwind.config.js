@@ -6,9 +6,14 @@ module.exports = {
       colors: {
         'rojo-marvel': '#EC1D25', 
         'rojo-marvel-oscuro': '#B71B22',
+        'gris': '#4A4A4A',
+        'negro':'#1C1C1C',
+        'gris-claro':'#312E2E',
+        'amarillo' : '#FFD700',
       },
       fontFamily: {
         bebas: ['Bebas Neue', 'sans-serif'],
+        montserrat : ['Montserrat' , 'sans-serif']
       },
     },
   },
