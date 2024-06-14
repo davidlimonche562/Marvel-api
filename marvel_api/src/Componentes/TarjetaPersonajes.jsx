@@ -1,30 +1,22 @@
 // src/components/TarjetaPersonaje.jsx
 import React from 'react';
-import PropTypes from 'prop-types';
-import { useNavigate } from 'react-router-dom';
 import Boton from './Boton';
 import Estrella from './Estrella';
 
 const TarjetaPersonaje = ({ personaje }) => {
-  const navigate = useNavigate();
-
   const estilos = {
     tarjeta: 'm-3 bg-negro w-[600px] h-[350px] rounded-xl flex relative overflow-hidden',
     imagen: 'w-[250px] h-[350px] rounded-l-xl object-cover',
-    contenido: 'flex-1 p-4 flex flex-col justify-between relative',
+    contenido: 'flex-1 p-4 flex flex-col justify-between',
     titulo: 'text-white font-bebas text-2xl',
+    descripcion: 'text-gray-400 mt-2',
     estrella: 'absolute top-2 right-2',
-    infoAdicionalTitulo: 'font-montserrat text-white font-bold text-lg my-2',
-    infoAdicionalValor: 'font-montserrat text-gray-400 text-base',
-    boton: 'absolute bottom-4 right-4', // Posición absoluta para el botón
+    infoAdicional: 'font-montserrat text-white font-bold text-lg my-4',
+    boton: 'self-end',
   };
 
-  const handleVerMas = () => {
-    navigate(`/personaje/${personaje.id}`);
-  };
-
-  if (!personaje || !personaje.imagen) {
-    return <div className="text-white">Cargando...</div>;
+  if (!personaje) {
+    return <div className="text-white">Cargando...</div>; // Muestra un mensaje de carga si personaje no está definido
   }
 
   return (
@@ -33,22 +25,19 @@ const TarjetaPersonaje = ({ personaje }) => {
       <div className={estilos.contenido}>
         <div>
           <h2 className={estilos.titulo}>{personaje.nombre}</h2>
-          <p className={estilos.infoAdicionalTitulo}>Primer Aparición: <span className={estilos.infoAdicionalValor}>{personaje.primeraAparicion}</span></p>
-          <p className={estilos.infoAdicionalTitulo}>Alias: <span className={estilos.infoAdicionalValor}>{personaje.alias}</span></p>
-          <p className={estilos.infoAdicionalTitulo}>Series: <span className={estilos.infoAdicionalValor}>{personaje.series}</span></p>
+          <p className={estilos.infoAdicional}>Primer Aparición: {personaje.primeraAparicion}</p>
+          <p className={estilos.infoAdicional}>Alias: {personaje.alias}</p>
+          <p className={estilos.infoAdicional}>Series: {personaje.series}</p>
         </div>
         <div className={estilos.boton}>
-          <button className='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded' onClick={handleVerMas}>
-            Ver más
-          </button>
+          <Boton estilo="BotonRojo" texto="Ver más" />
         </div>
       </div>
       <div className={estilos.estrella}>
-        <Estrella />
+        <Estrella personaje={personaje} /> {/* Pasa personaje a Estrella */}
       </div>
     </div>
   );
 };
-
 
 export default TarjetaPersonaje;

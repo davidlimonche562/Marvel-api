@@ -1,29 +1,41 @@
-    // src/components/Estrella.jsx
-    import React, { useState } from 'react';
-    import { IoStarSharp } from 'react-icons/io5';
+// src/components/Estrella.jsx
+import React, { useState, useEffect } from 'react';
+import { IoStarSharp } from 'react-icons/io5';
+import { useFavoritos } from './FavoritosContext';
 
-    const Estrella = () => {
-    const [estaSeleccionada, setEstaSeleccionada] = useState(false);
+const Estrella = ({ personaje }) => {
+  const { favoritos, toggleFavorito } = useFavoritos();
+  const [estaSeleccionada, setEstaSeleccionada] = useState(false);
 
-    const manejarClick = () => {
-    setEstaSeleccionada(!estaSeleccionada);
-    };
+  useEffect(() => {
+    if (personaje) { // Verifica si personaje no es undefined
+      const esFavorito = favoritos.some(fav => fav.id === personaje.id);
+      setEstaSeleccionada(esFavorito);
+    }
+  }, [favoritos, personaje]);
 
-    const estilos = {
+  const manejarClick = () => {
+    if (personaje) { // Verifica si personaje no es undefined
+      toggleFavorito(personaje);
+      setEstaSeleccionada(!estaSeleccionada);
+    }
+  };
+
+  const estilos = {
     estrella: `h-[28px] w-[22px] hover:text-amarillo transition-colors duration-200 ${
-        estaSeleccionada ? 'text-amarillo' : 'text-emerald-50'
+      estaSeleccionada ? 'text-amarillo' : 'text-emerald-50'
     }`,
     divEstrella: 'h-[28px] w-[32px] bg-gris-claro flex items-center justify-center rounded-lg cursor-pointer'
-    };
+  };
 
-    return (
+  return (
     <div
-        className={estilos.divEstrella}
-        onClick={manejarClick}
+      className={estilos.divEstrella}
+      onClick={manejarClick}
     >
-        <IoStarSharp className={estilos.estrella} />
+      <IoStarSharp className={estilos.estrella} />
     </div>
-    );
-    };
+  );
+};
 
-    export default Estrella;
+export default Estrella;

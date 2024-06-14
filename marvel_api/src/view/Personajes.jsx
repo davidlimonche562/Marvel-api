@@ -3,6 +3,8 @@
     import axios from 'axios';
     import TarjetaPersonaje from '../Componentes/TarjetaPersonajes';
 
+
+
     const Personajes = () => {
     const [personajes, setPersonajes] = useState([]);
     const apiUrl = 'https://gateway.marvel.com/v1/public/characters';
@@ -39,9 +41,11 @@
     }, []);
 
     return (
-    <section className='bg-gradient-to-br from-slate-950 to-slate-500 grid grid-cols-2 gap-6 w-full min-h-[100vh] px-6 py-8'>      {personajes.map((personaje) => (
+    <section className='bg-gradient-to-br from-slate-950 to-slate-500 grid grid-cols-2 gap-6 w-full min-h-[100vh] px-6 py-8'>     
+    {personajes.map((personaje) => (
         <TarjetaPersonaje key={personaje.id} personaje={personaje} />
         ))}
+
     </section>
     );
     };
