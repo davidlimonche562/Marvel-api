@@ -5,14 +5,15 @@ import Estrella from './Estrella';
 
 const TarjetaPersonaje = ({ personaje }) => {
   const estilos = {
-    tarjeta: 'm-3 bg-negro w-[600px] h-[350px] rounded-xl flex relative overflow-hidden',
-    imagen: 'w-[250px] h-[350px] rounded-l-xl object-cover',
+    tarjeta: 'm-3 bg-negro w-[600px] h-[300px] rounded-xl flex relative overflow-hidden',
+    imagen: 'w-[250px] h-[300px] rounded-l-xl object-cover',
     contenido: 'flex-1 p-4 flex flex-col justify-between',
-    titulo: 'text-white font-bebas text-2xl',
+    titulo: 'text-blanco-oscuro font-bebas text-3xl',
     descripcion: 'text-gray-400 mt-2',
     estrella: 'absolute top-2 right-2',
-    infoAdicional: 'font-montserrat text-white font-bold text-lg my-4',
+    infoAdicional: 'font-montserrat text-blanco font-bold text-base my-4',
     boton: 'self-end',
+    subtitulos: 'text-azul'
   };
 
   if (!personaje) {
@@ -25,9 +26,9 @@ const TarjetaPersonaje = ({ personaje }) => {
       <div className={estilos.contenido}>
         <div>
           <h2 className={estilos.titulo}>{personaje.nombre}</h2>
-          <p className={estilos.infoAdicional}>Primer Aparición: {personaje.primeraAparicion}</p>
-          <p className={estilos.infoAdicional}>Alias: {personaje.alias}</p>
-          <p className={estilos.infoAdicional}>Series: {personaje.series}</p>
+          <p className={estilos.infoAdicional}><span className={estilos.subtitulos}>Primer Aparición:</span> {personaje.primeraAparicion}</p>
+          <p className={estilos.infoAdicional}><span className={estilos.subtitulos}>Evento:</span> {personaje.eventos}</p>
+          <p className={estilos.infoAdicional}><span className={estilos.subtitulos}>Series</span>  {personaje.series}</p>
         </div>
         <div className={estilos.boton}>
           <Boton estilo="BotonRojo" texto="Ver más" />

@@ -10,6 +10,9 @@ module.exports = {
         'negro':'#1C1C1C',
         'gris-claro':'#312E2E',
         'amarillo' : '#FFD700',
+        'azul': '#1976D2',
+        'blanco' : '#ECECEC',
+        'blanco-oscuro': '#caf0f8'
       },
       fontFamily: {
         bebas: ['Bebas Neue', 'sans-serif'],
