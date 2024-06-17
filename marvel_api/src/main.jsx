@@ -16,7 +16,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <FavoritosProvider>
       <Router>
-        <NavBard /> {/* Añadir NavBar aquí */}
+        <NavBard /> 
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/personajes" element={<Personajes />} />

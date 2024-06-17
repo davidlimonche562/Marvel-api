@@ -43,11 +43,12 @@ const PersonajeIndividual = () => {
     }
 
     const styles = {
-        container: 'min-h-screen flex flex-col items-center justify-center mt-8',
+        container: 'min-h-screen flex flex-col items-center justify-center mt-8 bg-gradient-to-br from-slate-950 to-slate-500',
         content: 'w-[50%] flex flex-col gap-4 bg-gradient-to-br from-slate-950 to-slate-500 p-6 text-white rounded-lg shadow-lg',
         title: 'text-4xl font-bold mb-6',
         button: 'bg-blue-500 text-white font-bold py-2 px-4 rounded focus:outline-none transition-colors duration-300',
         description: 'text-xl mb-4',
+
     };
 
     return (
