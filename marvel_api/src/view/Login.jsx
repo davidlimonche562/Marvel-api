@@ -37,9 +37,9 @@ const Login = () => {
   };
 
   const estilos = {
-    contenedor: 'h-screen w-screen flex items-center justify-center bg-cover bg-center relative overflow-hidden',
-    overlay: 'absolute inset-0 bg-black opacity-50',
-    formulario: 'relative z-10 bg-white p-8 rounded-lg shadow-md w-[90%] max-w-md',
+    contenedor: 'h-[471px] w-full flex items-center justify-center bg-cover bg-center relative ',
+    overlay: 'absolute inset-0 bg-black opacity-50 ',
+    formulario: 'relative z-10 bg-white p-8 rounded-lg shadow-md w-[90%] max-w-md ',
     titulo: 'text-2xl font-semibold text-gray-800 mb-6 text-center',
     label: 'block text-gray-700 font-semibold mb-2 mt-4',
     input: 'w-full p-3 border border-gray-300 rounded mt-1 text-gray-700',

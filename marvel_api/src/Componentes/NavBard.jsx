@@ -1,38 +1,44 @@
-// src/components/NavBar.jsx
+
 import React, { useState, useEffect } from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 
 const NavBard = () => {
   const [autenticado, setAutenticado] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
+  const location = useLocation();
   const navigate = useNavigate();
 
-  // Verificar autenticación cuando el componente se monta
+  // Efecto para cargar el estado de autenticación
   useEffect(() => {
     const usuarioAutenticado = localStorage.getItem('autenticado');
-    if (usuarioAutenticado) {
-      setAutenticado(true);
-    }
+    setAutenticado(!!usuarioAutenticado);
   }, []);
 
-  // Función para manejar cierre de sesión
+  // Manejo de logout
   const handleLogout = () => {
-    localStorage.removeItem('autenticado'); // Elimina el indicador de autenticación
+    localStorage.removeItem('autenticado');
     setAutenticado(false);
-    alert("Cerrando seccion...");
-    navigate('/'); // Redirige al inicio
+    alert('Cierre de sesión correctamente');
+    navigate('/');
+    location.reload();
   };
 
+  // Función para alternar el menú
   const toggleMenu = () => {
     setShowMenu(!showMenu);
   };
 
+  // Estilos dinámicos para enlaces
   const changeStyles = ({ isActive }) => ({
     transform: isActive ? "scale(1.1)" : "scale(1)",
   });
 
+  // Verificar si la ruta es '/login' o '/registro'
+  const soloLogo = location.pathname === '/login' || location.pathname === '/registro';
+
   const estilos = {
     navBar: "w-full h-20 flex justify-between items-center p-4 bg-black",
+    logoContainer: "flex justify-center items-center w-full", // Centrar el logo
     container: "md:flex md:gap-6 font-family-mon items-center text-white",
     img: "w-40 h-20",
     buttons: "py-4 px-4 sm:items-center sm:flex gap-4",
@@ -45,40 +51,48 @@ const NavBard = () => {
   return (
     <nav className="flex flex-col">
       <div className={estilos.navBar}>
-        <img className={estilos.img} src="/ruta-a-tu-logo.png" alt="Logo" />
-        <div className={`md:flex md:gap-6 items-center text-white ${showMenu ? '' : 'hidden'}`}>
+        {soloLogo ? (
+          <div className={estilos.logoContainer}>
+            <NavLink to="/">
+              <img className={estilos.img} src="/ruta-a-tu-logo.png" alt="Logo" />
+            </NavLink>
+          </div>
+        ) : (
+          <>
+            <NavLink to="/">
+              <img className={estilos.img} src="/ruta-a-tu-logo.png" alt="Logo" />
+            </NavLink>
+            {autenticado && (
+              <div className={`md:flex md:gap-6 items-center text-white ${showMenu ? '' : 'hidden'}`}>
+                <NavLink style={changeStyles} to="/">Inicio</NavLink>
+                <NavLink style={changeStyles} to="/personajes">Personajes</NavLink>
+                <NavLink style={changeStyles} to="/favoritos">Favoritos</NavLink>
+                <NavLink style={changeStyles} to="/contacto">Contáctanos</NavLink>
+              </div>
+            )}
+            {autenticado ? (
+              <div className="flex items-center">
+                <button className="py-1 px-4 w-auto rounded text-white bg-blue-600 hover:bg-blue-700" onClick={handleLogout}>Cerrar sesión</button>
+              </div>
+            ) : (
+              <div className={estilos.buttons}>
+                <NavLink to="/login" className={estilos.button1}>Iniciar</NavLink>
+                <NavLink to="/registro" className={estilos.button2}>Registrarse</NavLink>
+              </div>
+            )}
+            <img className={estilos.hamburger} src="/ruta-a-tu-icono-de-menu.png" alt="Menú" onClick={toggleMenu} />
+          </>
+        )}
+      </div>
+      {autenticado && (
+        <div className={`${estilos.responsiveContainer} ${showMenu ? '' : 'hidden'}`}>
           <NavLink style={changeStyles} to="/">Inicio</NavLink>
           <NavLink style={changeStyles} to="/personajes">Personajes</NavLink>
           <NavLink style={changeStyles} to="/favoritos">Favoritos</NavLink>
           <NavLink style={changeStyles} to="/contacto">Contáctanos</NavLink>
-        </div>
-        {autenticado ? (
-          <div className="flex items-center">
-            <button className="py-1 px-4 w-auto rounded text-white bg-blue-600 hover:bg-blue-700" onClick={handleLogout}>Cerrar sesión</button>
-          </div>
-        ) : (
-          // Mostrar cuando el usuario no está autenticado
-          <div className={estilos.buttons}>
-            <NavLink to="/login" className={estilos.button1}>Iniciar</NavLink>
-            <NavLink to="/registro" className={estilos.button2}>Registrarse</NavLink>
-          </div>
-        )}
-        <img className={estilos.hamburger} src="/ruta-a-tu-icono-de-menu.png" alt="Menú" onClick={toggleMenu} />
-      </div>
-      <div className={`${estilos.responsiveContainer} ${showMenu ? '' : 'hidden'}`}>
-        <NavLink style={changeStyles} to="/">Inicio</NavLink>
-        <NavLink style={changeStyles} to="/personajes">Personajes</NavLink>
-        <NavLink style={changeStyles} to="/favoritos">Favoritos</NavLink>
-        <NavLink style={changeStyles} to="/contacto">Contáctanos</NavLink>
-        {autenticado ? (
           <button className={estilos.button1} onClick={handleLogout}>Cerrar sesión</button>
-        ) : (
-          <>
-            <NavLink to="/login" className={estilos.button1}>Iniciar</NavLink>
-            <NavLink to="/registro" className={estilos.button2}>Registrarse</NavLink>
-          </>
-        )}
-      </div>
+        </div>
+      )}
     </nav>
   );
 };

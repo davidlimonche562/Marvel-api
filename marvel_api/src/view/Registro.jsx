@@ -58,7 +58,7 @@
         };
 
     const estilos = {
-    contenedor: 'h-screen w-screen flex items-center justify-center bg-cover bg-center relative overflow-hidden',
+    contenedor: 'h-screen w-full flex items-center justify-center bg-cover bg-center relative overflow-hidden',
     overlay: 'absolute inset-0 bg-black opacity-50',
     formulario: 'relative z-10 bg-white p-8 rounded-lg shadow-md w-[90%] max-w-md',
     titulo: 'text-2xl font-semibold text-gray-800 mb-6 text-center',
