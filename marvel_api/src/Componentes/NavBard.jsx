@@ -1,6 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
 import { NavLink, useLocation, useNavigate } from 'react-router-dom';
+import Logo from "../../public/Marvel_Logo.svg.png"
 
 const NavBard = () => {
   const [autenticado, setAutenticado] = useState(false);
@@ -40,7 +41,7 @@ const NavBard = () => {
     navBar: "w-full h-20 flex justify-between items-center p-4 bg-black",
     logoContainer: "flex justify-center items-center w-full", // Centrar el logo
     container: "md:flex md:gap-6 font-family-mon items-center text-white",
-    img: "w-40 h-20",
+    img: "w-40 h-[50px]",
     buttons: "py-4 px-4 sm:items-center sm:flex gap-4",
     button1: "py-1 px-4 w-auto rounded text-white bg-gray-500 hover:bg-gray-700",
     button2: "py-1 px-4 w-auto rounded text-white bg-red-600 hover:bg-red-700",
@@ -54,13 +55,13 @@ const NavBard = () => {
         {soloLogo ? (
           <div className={estilos.logoContainer}>
             <NavLink to="/">
-              <img className={estilos.img} src="/ruta-a-tu-logo.png" alt="Logo" />
+              <img className={estilos.img} src={Logo} alt="Logo" />
             </NavLink>
           </div>
         ) : (
           <>
             <NavLink to="/">
-              <img className={estilos.img} src="/ruta-a-tu-logo.png" alt="Logo" />
+              <img className={estilos.img} src={Logo} alt="Logo" />
             </NavLink>
             {autenticado && (
               <div className={`md:flex md:gap-6 items-center text-white ${showMenu ? '' : 'hidden'}`}>

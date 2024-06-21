@@ -1,4 +1,3 @@
-// src/pages/Login.jsx
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 
@@ -27,30 +26,28 @@ const Login = () => {
 
     if (usuarioValido) {
       localStorage.setItem('autenticado', 'true');
-      alert("Inicio seccion correctamente");
-        navigate('/'); 
-    location. reload();
-
+      alert("Inicio sesión correctamente");
+      navigate('/');
+      location.reload();
     } else {
       setError('Correo electrónico o contraseña incorrectos');
     }
   };
 
   const estilos = {
-    contenedor: 'h-[471px] w-full flex items-center justify-center bg-cover bg-center relative ',
-    overlay: 'absolute inset-0 bg-black opacity-50 ',
-    formulario: 'relative z-10 bg-white p-8 rounded-lg shadow-md w-[90%] max-w-md ',
+    contenedor: 'flex items-center justify-center h-screen relative bg-fondo-personalizado1 bg-cover bg-center overflow-hidden',
+    overlay: 'absolute inset-0 bg-black opacity-50',
+    formulario: 'relative z-10 bg-white p-8 rounded-lg shadow-md w-[90%] max-w-md mx-auto',
     titulo: 'text-2xl font-semibold text-gray-800 mb-6 text-center',
     label: 'block text-gray-700 font-semibold mb-2 mt-4',
     input: 'w-full p-3 border border-gray-300 rounded mt-1 text-gray-700',
-    inputError: 'border-red-500',
     errorMsg: 'text-red-500 text-sm mt-1',
     boton: 'w-full bg-rojo-marvel hover:bg-rojo-marvel-oscuro text-white py-3 rounded mt-6 cursor-pointer font-bebas text-xl',
-    ancla: 'absolute right-8 text-blue-600 hover:text-blue-800 cursor-pointer',
+    ancla: 'block mt-4 text-center text-blue-600 hover:text-blue-800 cursor-pointer',
   };
 
   return (
-    <div className={estilos.contenedor} style={{ backgroundImage: 'url(/ruta-a-tu-imagen.jpg)', backgroundSize: 'cover', backgroundPosition: 'center' }}>
+    <div className={estilos.contenedor}>
       <div className={estilos.overlay}></div>
       <form className={estilos.formulario} onSubmit={handleSubmit}>
         <h2 className={estilos.titulo}>Iniciar Sesión</h2>
