@@ -1,4 +1,4 @@
-// src/components/Boton.jsx
+
 const Boton = ({ estilo, texto, onClick }) => {
     const estilos = {
       BotonRojo: 'bg-rojo-marvel hover:bg-rojo-marvel-oscuro rounded-lg w-24 h-10 font-bebas text-lg text-white transition-colors duration-1000',

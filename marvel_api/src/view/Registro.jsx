@@ -1,118 +1,115 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 
-const Registro = () => {
-  const [usuario, setUsuario] = useState({
-    nombreUsuario: '',
-    email: '',
-    password: ''
-  });
-  const [errores, setErrores] = useState({});
-  const navigate = useNavigate();
+import React, { useState, useEffect } from 'react';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
+import Logo from "../../public/Marvel_Logo.svg.png"
+const NavBard = () => {
+    const [autenticado, setAutenticado] = useState(false);
+    const [showMenu, setShowMenu] = useState(false);
+    const location = useLocation();
+    const navigate = useNavigate();
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setUsuario({
-      ...usuario,
-      [name]: value
+
+    useEffect(() => {
+        const usuarioAutenticado = localStorage.getItem('autenticado');
+        setAutenticado(!!usuarioAutenticado);
+    }, []);
+
+    // Manejo de logout
+    const handleLogout = () => {
+        localStorage.removeItem('autenticado');
+        setAutenticado(false);
+        localStorage.removeItem('esAdmin');
+        localStorage.removeItem('usuarioActual');
+        localStorage.removeItem('indice');
+        alert('Cierre de sesión correctamente');
+        navigate('/');
+        location.reload();
+    };
+
+    // Función para alternar el menú
+    const toggleMenu = () => {
+        setShowMenu(!showMenu);
+    };
+
+
+    const changeStyles = ({ isActive }) => ({
+        transform: isActive ? "scale(1.1)" : "scale(1)",
     });
-  };
 
-  const validarCampos = () => {
-    let erroresTemp = {};
-    const regexNombreUsuario = /^[a-z0-9]+$/; // Solo minúsculas y números
-    const regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/; // Validación básica de correo
-    const regexPassword = /^.{8,}$/; // Mínimo 8 caracteres
+    // Verificar si la ruta es '/login' o '/registro'
+    const soloLogo = location.pathname === '/login' || location.pathname === '/registro';
 
-    if (!regexNombreUsuario.test(usuario.nombreUsuario)) {
-      erroresTemp.nombreUsuario = 'El nombre de usuario solo puede contener letras minúsculas y números.';
-    }
-    if (!regexEmail.test(usuario.email)) {
-      erroresTemp.email = 'Correo electrónico no válido.';
-    }
-    if (!regexPassword.test(usuario.password)) {
-      erroresTemp.password = 'La contraseña debe tener al menos 8 caracteres.';
-    }
-    return erroresTemp;
-  };
+    const estilos = {
+        navBar: "w-full h-20 flex justify-between items-center p-4 bg-black",
+        logoContainer: "flex justify-center items-center w-full", // Centrar el logo
+        container: "md:flex md:gap-6 font-family-mon items-center text-white",
+        img: "w-40 h-20",
+        buttons: "py-4 px-4 sm:items-center sm:flex gap-4",
+        button1: "py-1 px-4 w-auto rounded text-white bg-gray-500 hover:bg-gray-700",
+        button2: "py-1 px-4 w-auto rounded text-white bg-red-600 hover:bg-red-700",
+        hamburger: "md:hidden text-white w-10 h-10 cursor-pointer",
+        responsiveContainer: "md:hidden text-white text-center w-full bg-black h-auto flex items-center flex-col text-sm justify-center gap-2 transition-all duration-300",
+    };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const erroresValidacion = validarCampos();
-    if (Object.keys(erroresValidacion).length > 0) {
-      setErrores(erroresValidacion);
-    } else {
-      // Guardar usuario en localStorage
-      const usuarios = JSON.parse(localStorage.getItem('usuarios')) || [];
-      usuarios.push(usuario);
-      localStorage.setItem('usuarios', JSON.stringify(usuarios));
-      alert('Usuario registrado correctamente');
-      setUsuario({
-        nombreUsuario: '',
-        email: '',
-        password: ''
-      });
-      navigate('/login'); // Redirige al login
-    }
-  };
-
-  const estilos = {
-    contenedor: 'flex items-center justify-center h-screen relative bg-fondo-personalizado1 bg-cover bg-center overflow-hidden',
-    overlay: 'absolute inset-0 bg-black opacity-50',
-    formulario: 'relative z-10 bg-white p-8 rounded-lg shadow-md w-[90%] max-w-md mx-auto',
-    titulo: 'text-2xl font-semibold text-gray-800 mb-6 text-center',
-    label: 'block text-gray-700 font-semibold mb-2 mt-4',
-    input: 'w-full p-3 border border-gray-300 rounded mt-1 text-gray-700',
-    inputError: 'border-red-500', // Estilo para inputs con error
-    errorMsg: 'text-red-500 text-sm mt-1',
-    boton: 'w-full bg-rojo-marvel hover:bg-rojo-marvel-oscuro text-white py-3 rounded mt-6 cursor-pointer font-bebas text-xl',
-  };
-
-  return (
-    <div className={estilos.contenedor}>
-      <div className={estilos.overlay}></div>
-      <form className={estilos.formulario} onSubmit={handleSubmit}>
-        <h2 className={estilos.titulo}>Registro</h2>
-        <label className={estilos.label} htmlFor="nombreUsuario">Nombre de Usuario</label>
-        <input
-          type="text"
-          id="nombreUsuario"
-          name="nombreUsuario"
-          placeholder="Nombre de Usuario"
-          className={`${estilos.input} ${errores.nombreUsuario ? estilos.inputError : ''}`}
-          value={usuario.nombreUsuario}
-          onChange={handleChange}
-          required
-        />
-        {errores.nombreUsuario && <p className={estilos.errorMsg}>{errores.nombreUsuario}</p>}
-        <label className={estilos.label} htmlFor="email">Correo Electrónico</label>
-        <input
-          type="email"
-          id="email"
-          name="email"
-          placeholder="Correo Electrónico"
-          className={`${estilos.input} ${errores.email ? estilos.inputError : ''}`}
-          value={usuario.email}
-          onChange={handleChange}
-          required
-        />
-        {errores.email && <p className={estilos.errorMsg}>{errores.email}</p>}
-        <label className={estilos.label} htmlFor="password">Contraseña</label>
-        <input
-          type="password"
-          id="password"
-          name="password"
-          placeholder="Contraseña"
-          className={`${estilos.input} ${errores.password ? estilos.inputError : ''}`}
-          value={usuario.password}
-          onChange={handleChange}
-          required
-        />
-        {errores.password && <p className={estilos.errorMsg}>{errores.password}</p>}
-        <button type="submit" className={estilos.boton}>Registrarse</button>
-      </form>
-    </div>
-  );
+    return (
+      <nav className="flex flex-col">
+          <div className={estilos.navBar}>
+            {soloLogo ? (
+              <div className={estilos.logoContainer}>
+                  <NavLink to="/">
+                      <img className={estilos.img} src="{}" alt="Logo" />
+                  </NavLink>
+              </div>
+          ) : (
+            <>
+              <NavLink to="/">
+                <img className={estilos.img} src="{Logo}" alt="Logo" />
+              </NavLink>
+              {autenticado && (
+                  <div className={`md:flex md:gap-6 items-center text-white ${showMenu ? '' : 'hidden'}`}>
+                      <NavLink style={changeStyles} to="/">Inicio</NavLink>
+                      <NavLink style={changeStyles} to="/personajes">Personajes</NavLink>
+                      <NavLink style={changeStyles} to="/favoritos">Favoritos</NavLink>
+                      {localStorage.getItem('esAdmin') === 'true' ? (
+                          <NavLink style={changeStyles} to="/verMensajes">Ver Mensajes</NavLink>
+                      ) : (
+                          <NavLink style={changeStyles} to="/contacto">Contáctanos</NavLink>
+                      )}   
+                  </div>
+              )}
+              {autenticado ? (
+                <div className="flex items-center">
+                  <button className="py-1 px-4 w-auto rounded text-white bg-blue-600 hover:bg-blue-700" onClick={handleLogout}>Cerrar sesión</button>
+                </div>
+              ) : (
+                <div className={estilos.buttons}>
+                  <NavLink to="/login" className={estilos.button1}>Iniciar</NavLink>
+                  <NavLink to="/registro" className={estilos.button2}>Registrarse</NavLink>
+                </div>
+              )}
+              <img className={estilos.hamburger} src="/ruta-a-tu-icono-de-menu.png" alt="Menú" onClick={toggleMenu} />
+            </>
+          )}
+        </div>
+        {autenticado && (
+          <div className={`${estilos.responsiveContainer} ${showMenu ? '' : 'hidden'}`}>
+            <NavLink style={changeStyles} to="/">Inicio</NavLink>
+            <NavLink style={changeStyles} to="/personajes">Personajes</NavLink>
+            <NavLink style={changeStyles} to="/favoritos">Favoritos</NavLink>
+            {localStorage.getItem('esAdmin') === 'true' ? (
+                    <NavLink style={changeStyles} to="/verMensajes">Ver Mensajes</NavLink>
+                  ) : (
+                    <NavLink style={changeStyles} to="/contacto">Contáctanos</NavLink>
+                  )}          
+                  
+            <button className={estilos.button1} onClick={handleLogout}>Cerrar sesión</button>
+          </div>
+        )}
+      </nav>
+    );
 };
 
-export default Registro;
+export default NavBard;
+
+
+

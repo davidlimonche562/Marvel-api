@@ -18,19 +18,37 @@ const Login = () => {
   };
 
   const handleSubmit = (e) => {
-    e.preventDefault();
-    const usuarios = JSON.parse(localStorage.getItem('usuarios')) || [];
-    const usuarioValido = usuarios.find(
-      (usuario) => usuario.email === credenciales.email && usuario.password === credenciales.password
+      e.preventDefault();
+      const usuarios = JSON.parse(localStorage.getItem('usuarios')) || [];
+      const administrador = JSON.parse(localStorage.getItem('administrador')) || [];
+      const usuarioValido = usuarios.find(
+          (usuario) => usuario.email === credenciales.email && usuario.password === credenciales.password
     );
-
+    const indice = usuarios.findIndex(
+        (usuario) => usuario.email === credenciales.email && usuario.password === credenciales.password
+      
+    )
+    const adminValido = administrador.find(
+        (admin) => admin.email === credenciales.email && admin.password === credenciales.password
+    );
+  
     if (usuarioValido) {
-      localStorage.setItem('autenticado', 'true');
-      alert("Inicio sesión correctamente");
-      navigate('/');
-      location.reload();
+        localStorage.setItem('usuarioActual', JSON.stringify(usuarios[indice]));
+        localStorage.setItem('indice', indice);
+        localStorage.setItem('autenticado', 'true');
+        localStorage.removeItem('esAdmin');
+        
+        alert("Inicio sesión correctamente");
+        navigate('/');
+        location.reload();
+    } else if (adminValido) {
+        localStorage.setItem('autenticado', 'true');
+        localStorage.setItem('esAdmin', 'true');
+        alert("Inicio sesión correctamente como administrador");
+        navigate('/');
+        location.reload();
     } else {
-      setError('Correo electrónico o contraseña incorrectos');
+        setError('Correo electrónico o contraseña incorrectos');
     }
   };
 

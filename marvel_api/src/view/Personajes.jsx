@@ -1,4 +1,3 @@
-// src/pages/Personajes.jsx
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import TarjetaPersonaje from '../Componentes/TarjetaPersonajes';
@@ -11,10 +10,10 @@ const Personajes = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPersonajes, setTotalPersonajes] = useState(0);
   const apiUrl = 'https://gateway.marvel.com/v1/public/characters';
-  const apiKey = '0a9945532a6c010f16416b21cc865557'; // Reemplaza esto con tu clave de API
-  const imagenPorDefecto = '/ruta-a-tu-imagen-por-defecto.jpg'; // Ruta a tu imagen por defecto
+  const apiKey = '0a9945532a6c010f16416b21cc865557'; 
+  const imagenPorDefecto = '/ruta-a-tu-imagen-por-defecto.jpg'; 
   const urlImagenMarvel = 'http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available.jpg';
-  const maxPersonajes = 2; // Número máximo de personajes que deseas
+  const maxPersonajes = 500; // Número máximo de personajes que deseas
 
   useEffect(() => {
     const fetchPersonajes = async () => {
@@ -68,42 +67,51 @@ const Personajes = () => {
   const opcionesPersonajesPorPagina = [6, 12, 24].filter((opcion) => opcion <= totalPersonajes);
 
   const estilos = {
-    section: 'bg-gradient-to-br from-slate-950 to-slate-500 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6 w-full min-h-[100vh] px-6 py-8',
-    tarjeta: 'min-h-[300px] sm:min-h-0', // Clase condicional para tarjetas
+    section: 'bg-white grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-6 w-full min-h-[100vh] px-6 py-8',
+    tarjeta: 'min-h-[300px] sm:min-h-0', 
+    contenedorPrincipal: 'bg-gray-800 min-h-screen flex flex-col items-center', 
+    contenedorCentrado: 'flex justify-center items-center my-4',
+    label: 'mr-2 text-rojo-marvel',
+    select: 'bg-gray-800 text-white px-2 py-1 rounded',
   };
 
   return (
-    <section className={estilos.section}>
-      {personajes.map((personaje) => (
-        <div key={personaje.id} className={estilos.tarjeta}>
-          <TarjetaPersonaje personaje={personaje} />
-        </div>
-      ))}
-
-      {totalPersonajes > personajesPorPagina && (
-        <>
-          <div className="flex justify-center items-center my-4">
-            <label className="mr-2 text-rojo-marvel">Personajes por página:</label>
-            <select
-              className="bg-gray-800 text-white px-2 py-1 rounded"
-              value={personajesPorPagina}
-              onChange={(e) => setPersonajesPorPagina(Number(e.target.value))}
-            >
-              {opcionesPersonajesPorPagina.map((opcion) => (
-                <option key={opcion} value={opcion}>
-                  {opcion}
-                </option>
-              ))}
-            </select>
+    <div className={estilos.contenedorPrincipal}>
+      <BarraPrincipal />
+      <section className={estilos.section}>
+        {personajes.map((personaje) => (
+          <div key={personaje.id} className={estilos.tarjeta}>
+            <TarjetaPersonaje personaje={personaje} />
           </div>
-          <Paginacion
-            paginaActual={currentPage}
-            totalPaginas={totalPaginas}
-            setPaginaActual={setCurrentPage}
-          />
-        </>
-      )}
-    </section>
+        ))}
+
+        {totalPersonajes > personajesPorPagina && (
+          <>
+            <div className={estilos.contenedorCentrado}>
+              <label className={estilos.label}>Personajes por página:</label>
+              <select
+                className={estilos.select}
+                value={personajesPorPagina}
+                onChange={(e) => setPersonajesPorPagina(Number(e.target.value))}
+              >
+                {opcionesPersonajesPorPagina.map((opcion) => (
+                  <option key={opcion} value={opcion}>
+                    {opcion}
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className={estilos.contenedorCentrado}>
+              <Paginacion
+                paginaActual={currentPage}
+                totalPaginas={totalPaginas}
+                setPaginaActual={setCurrentPage}
+              />
+            </div>
+          </>
+        )}
+      </section>
+    </div>
   );
 };
 

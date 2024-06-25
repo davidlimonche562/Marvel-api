@@ -1,4 +1,4 @@
-// src/components/Estrella.jsx
+
 import React, { useState, useEffect } from 'react';
 import { IoStarSharp } from 'react-icons/io5';
 import { useFavoritos } from './FavoritosContext';
@@ -8,14 +8,14 @@ const Estrella = ({ personaje }) => {
   const [estaSeleccionada, setEstaSeleccionada] = useState(false);
 
   useEffect(() => {
-    if (personaje) { // Verifica si personaje no es undefined
+    if (personaje) {
       const esFavorito = favoritos.some(fav => fav.id === personaje.id);
       setEstaSeleccionada(esFavorito);
     }
   }, [favoritos, personaje]);
 
   const manejarClick = () => {
-    if (personaje) { // Verifica si personaje no es undefined
+    if (personaje) { 
       toggleFavorito(personaje);
       setEstaSeleccionada(!estaSeleccionada);
     }

@@ -1,4 +1,4 @@
-// src/components/Paginacion.jsx
+
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/20/solid';
 
 const Paginacion = ({ paginaActual, totalPaginas, setPaginaActual }) => {

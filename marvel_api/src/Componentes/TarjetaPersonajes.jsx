@@ -1,4 +1,4 @@
-// src/components/TarjetaPersonaje.jsx
+
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import Boton from './Boton';

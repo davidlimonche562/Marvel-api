@@ -1,4 +1,4 @@
-// src/main.jsx
+
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter as Router, Route, Routes, useLocation } from 'react-router-dom';
@@ -12,6 +12,8 @@ import PersonajesFavoritos from './view/PersonajesFavoritos'; // Importa la vist
 import { FavoritosProvider } from './Componentes/FavoritosContext'; // Importa el proveedor de favoritos
 import Home from './view/Home';
 import Footer from './Componentes/Footer';
+import Contacto from './view/Contacto';
+import VerMensajes from './view/VerMensajes';
 
 const App = () => {
   const location = useLocation();
@@ -28,6 +30,8 @@ const App = () => {
         <Route path="/registro" element={<Registro />} />
         <Route path="/personaje/:id" element={<PersonajeIndividual />} />
         <Route path="/favoritos" element={<PersonajesFavoritos />} />
+        <Route path="/contacto" element={<Contacto />} />
+        <Route path="/verMensajes" element={<VerMensajes />} />
       </Routes>
       {mostrarFooter && <Footer />}
     </>

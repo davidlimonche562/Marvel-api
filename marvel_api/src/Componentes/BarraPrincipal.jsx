@@ -1,14 +1,14 @@
-// src/components/BarraPrincipal.jsx
+
 import React from 'react';
 import Imagen from '../../public/desktop-wallpaper-all-marvel-characters-characters.jpg'
 
 
 const BarraPrincipal = () => {
   const estilos = {
-    contenedor: 'relative h-full w-full', // Contenedor principal
-    fondoImagen: ' bg-fondo-personalizado bg-cover h-[300px] overflow-hidden', // Fondo de imagen
-    overlay: 'absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center', // Overlay oscuro
-    h1: 'relative text-rojo-marvel font-bebas text-9xl', // Título H1 centrado
+    contenedor: 'relative h-full w-full', 
+    fondoImagen: ' bg-fondo-personalizado bg-cover h-[300px] overflow-hidden',
+    overlay: 'absolute inset-0 bg-black bg-opacity-50 flex items-center justify-center bg-cover bg-center bg-no-repeat bg-[url{Imagen}]', 
+    h1: 'relative text-rojo-marvel font-bebas text-9xl', 
   };
 
   return (
